@@ -14,7 +14,7 @@ import numpy as np
 #own packages
 from PS_interpolate import *
 
-#create param infile for axionCAMB
+#create param infile for CAMB
 def camb_params(params_path, arg_dic, print_info = False, 
                 output_root='test', get_scalar_cls='F',
                 get_vector_cls='F', get_tensor_cls='F', get_transfer='T',
@@ -130,12 +130,12 @@ def camb_params(params_path, arg_dic, print_info = False,
             print(line)
         return arg_dic
     else:
-        vals = {'omega_b_0': ombh2, 'omega_d_0': omch2, 'omega_db_0': omch2+ombh2, 'omega_nu_0': omnuh2, 'omega_m_0': omch2+ombh2+omnuh2, 
+        arg_dic = {'omega_b_0': ombh2, 'omega_d_0': omch2, 'omega_db_0': omch2+ombh2, 'omega_nu_0': omnuh2, 'omega_m_0': omch2+ombh2+omnuh2, 
                 'm_ax': m_ax, 'h': hubble/100., 'z': transfer_redshift__1___, 
                 'Omega_b_0': ombh2/(hubble/100)**2, 'Omega_d_0': omch2/(hubble/100)**2, 'Omega_nu_0': omnuh2/(hubble/100)**2, 'Omega_db_0': (ombh2+omch2)/(hubble/100)**2, 
                 'Omega_m_0': (ombh2+omch2+omnuh2)/(hubble/100)**2, 'Omega_w_0': 1-(ombh2+omch2+omaxh2)/(hubble/100)**2, 
                 'ns': scalar_spectral_index__1___, 'As': scalar_amp__1___, 'k_piv': pivot_scalar, 'transfer_kmax': transfer_kmax}
-        return vals
+        return arg_dic
     
 
 def lin_PS_CAMB(params_path, arg_dic, k_arr, comp_1 = 'total', comp_2 = 'total'):
@@ -165,7 +165,7 @@ def func_power_spec_dic(params_path, arg_dic, k_arr):
     crate a dictionary with k and the linear power spectra from total matter and cold matter as a function of k. 
     The units for k is h/Mpc and for the PSs (Mpc/h)^3.
     The folowing linear power spectra will be computed:
-    total, CDM, baryon, cold matter, axion
+    total, CDM, baryon, cold matter, massive neutrinos
     """ 
     #create PS dictionary
     power_spec_dic = {}
@@ -182,7 +182,7 @@ def func_power_spec_interp_dic(power_spec_dic, cosmo_dic, LCDM_cosmos=False):
     The k range depends on the smallest halo mass given in cosmo_dic
     The units for k is h/Mpc and for the PSs (Mpc/h)^3.
     The following linear power spectra will be computed:
-    total, CDM, baryon, cold matter, axion
+    total, CDM, baryon, cold matter, massive neutrinos
     """ 
     #create PS dictionary
     power_spec_interp_dic = {}

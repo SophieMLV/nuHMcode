@@ -54,8 +54,6 @@ def func_PS_interpolate(k_arr_value, k_arr, PS_arr):
             return PS_func(k_value)
         
     PS_interpolate = [func_PS_find(k_value) for k_value in k_arr_value]
-    #for k_value in k_arr_value:
-    #    PS_interpolate.append(func_PS_find(k_value))
     return np.array(PS_interpolate)
 
 def func_PS_interpolate_M(M, k, PS, cosmo_dic, Omega_0):

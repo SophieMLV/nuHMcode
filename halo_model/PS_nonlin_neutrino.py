@@ -17,7 +17,7 @@ from PS_nonlin_cold import *
 def func_full_halo_model_nu_sophie(M, k, PS_cold, PS_nu, k_sigma, PS_sigma, cosmo_dic, hmcode_dic, neutrino_dic, 
                             alpha = False, eta_given = False, LCDM=True, nu_one_halo=False, one_halo_damping = False, two_halo_damping = False):
     """ 
-    My Full Halo Model with massive neutrinos, see my masterhesis eq TBC to see the full formula
+    My Full Halo Model with massive neutrinos, see my masterhesis eq 5.2, 5.4 and 5.5 to see the full formula
     all modifications form HMcode2020 https://arxiv.org/abs/2009.01858 can be used (if wanted)
     by default use only the damping in the one halo term on large scales (for all parts) 
     to ensure the correct behaviour on large scales

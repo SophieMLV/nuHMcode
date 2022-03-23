@@ -26,11 +26,9 @@ def func_alpha_nu_profile(M, cosmoc_dic):
     
     if cosmoc_dic['mnu'] == 0.6:
         return func_transition(M) * ((-4.62449381390627) + 0.18610288729325442 * np.log(M)) + (1-func_transition(M)) * (-3.64 + 0.15 * np.log(M))
-    elif cosmoc_dic['mnu'] == 0.3:
+    else: # cosmoc_dic['mnu'] == 0.3
         return func_transition(M) * ((-6.689848499879118) + 0.23790527192214206 * np.log(M)) + (1-func_transition(M)) * (-2.06 + 0.09 * np.log(M))
-    else:
-        print('WARNING: total neutrinos mass is either 0.6eV nor 0.3eV')
-        return 'total neutrinos mass is either 0.6eV nor 0.3eV'
+
         
 
 #kappa paremter se paper figure 10 an eq. 3.5  
@@ -42,11 +40,9 @@ def func_kappa_nu_profile(M, cosmo_dic):
     """
     if cosmo_dic['mnu'] == 0.6:
         return (0.24 + 1.144 * 10**(-20) * M**(1.7))*(1e-3)**func_alpha_nu_profile(M, cosmo_dic) #last factor due to dimensions
-    elif cosmo_dic['mnu'] == 0.3:
+    else: #cosmo_dic['mnu'] == 0.3
         return (0.19 + 3.242 * 10**(-19) * M**(1.5))*(1e-3)**func_alpha_nu_profile(M, cosmo_dic )#last factor due to dimensions
-    else:
-        print('WARNING: total neutrinos mass is either 0.6eV nor 0.3eV')
-        return 'total neutrinos mass is either 0.6eV nor 0.3eV'
+
     
     
 #rho_c paremter se paper figure 10 an eq. 3.4  
@@ -58,11 +54,9 @@ def func_rhoc_nu_profile(M, cosmoc_dic):
     """
     if cosmoc_dic['mnu'] == 0.6:
         return 3.7478 * 10**(-8) * M**(0.64)
-    elif cosmoc_dic['mnu'] == 0.3:
+    else: #cosmoc_dic['mnu'] == 0.3:
         return 6.056 * 10**(-8) * M**(0.58)
-    else:
-        print('WARNING: total neutrinos mass is either 0.6eV nor 0.3eV')
-        return 'total neutrinos mass is either 0.6eV nor 0.3eV'
+
 
         
 #r_c paremter se paper figure 10 an eq. 3.4  be carefull:in the paper in units of kpc/h
@@ -76,12 +70,9 @@ def func_rc_nu_profile(M, cosmoc_dic):
     """
     if cosmoc_dic['mnu'] == 0.6:
             return 2.046 * 10**(-4) * M**(0.43) * 10**(-3)
-    elif cosmoc_dic['mnu'] == 0.3:
+    else: #cosmoc_dic['mnu'] == 0.3:
         return 4.029 * 10**(-8) * M**(0.68) * 10**(-3)
-    else:
-        print('WARNING: total neutrinos mass is either 0.6eV nor 0.3eV')
-        return 'total neutrinos mass is either 0.6eV nor 0.3eV'
-        
+
         
     
 #neutrino density profile as rho_nu^halo = delta_nu bar(rho_nu)
@@ -97,7 +88,7 @@ def func_density_profile_neutrino(M, r, cosmo_dic):
             return delta_neutrino * func_rho_comp_0(cosmo_dic['Omega_nu_0'])
         else:
             delta_neutrino = func_rhoc_nu_profile(M, cosmo_dic) / (1 + (r/func_rc_nu_profile(M, cosmo_dic))**(func_alpha_nu_profile(M, cosmo_dic)) ) 
-            return delta_neutrino * func_rho_comp_0(cosmo_dic['Omega_nu_0']) #func_rho_m_comp(cosmo_dic, cosmo_dic['Omega_nu_0'])
+            return delta_neutrino * func_rho_comp_0(cosmo_dic['Omega_nu_0'])
     else:
         dens_arr = []
         for m in M:
@@ -112,13 +103,13 @@ def func_density_profile_neutrino(M, r, cosmo_dic):
 
 
 
-
 #mass neutrino halo:
 def func_neutrino_halo_mass(M, cosmo_dic, M_cut, LCDM = True):
     """
     M in units of solar_mass/h
     return mass of neutrino halo around CDM halo
     in units of solar_mass/h
+    calculated by integrating neutrino halo density profile
     """
     Omega_cb_0 = cosmo_dic['Omega_db_0']
     Omega_cb_0 = cosmo_dic['Omega_db_0']

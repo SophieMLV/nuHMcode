@@ -33,19 +33,6 @@ def func_sigma_r(R, k, PS):
     sigma_squared = integrate.simps(y=integrand, x=k, axis=-1) / (2. * np.pi ** 2)
     
     return np.sqrt(sigma_squared)
-
-
-def func_sigma_squared_damping_twohalo(k_sigma, PS_sigma): 
-    """
-    k is in units of h/Mpc and PS in (Mpc/h)^3.
-    returns linear variance as in https://arxiv.org/pdf/2009.01858.pdf eq 10 
-    in the limit R -> 0
-    this is needed for the 
-    """   
-    integrand = PS_sigma
-    sigma_squared = integrate.simps(y=integrand, x=k_sigma, axis=-1) / (2. * np.pi ** 2)
-    
-    return 1/3 * sigma_squared
   
 
 def func_sigma_M(M, k, PS, cosmo_dic, Omega_0):

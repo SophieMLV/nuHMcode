@@ -48,7 +48,7 @@ def func_G_z(cosmo_dic):
 
 def func_quadratics(x, y, i):
     """
-    function critical overdensity and virial overdensity from Mead 2020 eq.
+    function critical overdensity and virial overdensity from Mead 2020 eq.A3
     """
     P_matrix = [[ -0.0069, -0.0208, 0.0312, 0.0021], [0.0001, -0.0647, -0.0417, 0.0646], 
                 [-0.79, -10.17, 2.51, 6.51], [-1.89, 0.38, 18.8, -15.87]]
@@ -58,7 +58,7 @@ def func_quadratics(x, y, i):
 def func_delta_c(cosmo_dic):
     """
     critical density for spherical/ellepsoidal collapse as is
-    HMCode2020: https://arxiv.org/abs/2009.01858
+    HMCode2020: https://arxiv.org/abs/2009.01858 eq. A1
     """
     alpha1, alpha2, aplha3, alpha4 = 1., 0., 1., 2.
     
@@ -70,7 +70,6 @@ def func_delta_c(cosmo_dic):
     summand2 = func_quadratics(g * (1+z), G * (1+z), 1) * np.log10(func_Omega_comp_z(cosmo_dic, cosmo_dic['Omega_m_0']))**alpha2
     
     factor1 = 1 + summand1 + summand2
-    #at the moment neutrinos dont cluster at all --> propably change fragtion  Omega_nu_value/Omega_m_value
     factor2 = 1.686 * (1-0.041 * cosmo_dic['Omega_nu_0']/cosmo_dic['Omega_m_0'])
     
     delta_c = factor1 * factor2
@@ -80,12 +79,12 @@ def func_delta_c_LCDM(cosmo_dic):
     """
     returns critical denity for spherical/ellepsoidal collapse for LCDM cosmos
     """                    
-    return 1.686 #* func_Omega_m_z(cosmo_dic)**(0.0055)
+    return 1.686 
 
 def func_Delta_vir(cosmo_dic):
     """
     halo overdensity as in
-    HMCode2020: https://arxiv.org/abs/2009.01858
+    HMCode2020: https://arxiv.org/abs/2009.01858 eq.A2
     """                  
     alpha1, alpha2, alpha3, alpha4 = 1., 0., 1., 2.
     
@@ -97,7 +96,6 @@ def func_Delta_vir(cosmo_dic):
     summand2 = func_quadratics(g *(1+z), G * (1+z), 3) * np.log10(func_Omega_comp_z(cosmo_dic, cosmo_dic['Omega_m_0']))**alpha4
     
     factor1 = 1 + summand1 + summand2
-    #at the moment neutrinos dont cluster at all --> propably change fraction  Omega_nu_value/Omega_m_value
     factor2 = 177.7 * (1+0.763 * cosmo_dic['Omega_nu_0']/cosmo_dic['Omega_m_0'])
     
     Delta_v = factor1 * factor2
@@ -107,7 +105,7 @@ def func_Delta_vir_LCDM(cosmo_dic, Omega_0):
     """
     halo overdensity for LCDM comos,
     make the change, that only matter of the type 
-    Omega_0 is take into accound for the overdensity
+    Omega_0 is taken into accound for the overdensity
     """
     x = func_Omega_comp_z(cosmo_dic, Omega_0) -1
     #x = func_Omega_comp_z(cosmo_dic, cosmo_dic['Omega_m_0']) -1
@@ -122,8 +120,5 @@ def func_r_vir(M, cosmo_dic, Omega_0, LCDM=True):
         Delta_vir = func_Delta_vir_LCDM(cosmo_dic, Omega_0)
     else:
         Delta_vir = func_Delta_vir(cosmo_dic)
-    #print(Delta_vir)
-    #print(M)
-    #print(func_rho_comp_0(Omega_0))
     return (3. * M / (4. * np.pi * func_rho_comp_0(Omega_0) * Delta_vir ))**(1./3.)
 

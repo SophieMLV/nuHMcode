@@ -17,7 +17,7 @@ from PS_nonlin_cold import *
 def func_full_halo_model_nu_sophie(M, k, PS_cold, PS_nu, k_sigma, PS_sigma, cosmo_dic, hmcode_dic, neutrino_dic, 
                             alpha = False, eta_given = False, LCDM=True, nu_one_halo=False, one_halo_damping = False, two_halo_damping = False):
     """ 
-    My Full Halo Model with massive neutrinos, see my masterhesis eq TBC to see the full formula
+    My Full Halo Model with massive neutrinos, see my masterhesis eq 5.2, 5.4 and 5.5 to see the full formula
     all modifications form HMcode2020 https://arxiv.org/abs/2009.01858 can be used (if wanted)
     by default use only the damping in the one halo term on large scales (for all parts) 
     to ensure the correct behaviour on large scales
@@ -29,7 +29,7 @@ def func_full_halo_model_nu_sophie(M, k, PS_cold, PS_nu, k_sigma, PS_sigma, cosm
     """
     ####Cold matter term#####
     PS_cold_nonlin = func_non_lin_PS_matter(M, k, PS_cold, k_sigma, PS_sigma, cosmo_dic, hmcode_dic, cosmo_dic['Omega_db_0'], cosmo_dic['Omega_db_0'], 
-                                            alpha = alpha, eta_given = eta_given, LCDM=LCDM, nu_one_halo=nu_one_halo, 
+                                            alpha = alpha, eta_given = eta_given, LCDM=LCDM, nu_one_halo=False, 
                                             one_halo_damping = one_halo_damping, two_halo_damping = two_halo_damping)[0]
     
     ##compute all ingridients for the diff halo model parts##
@@ -43,7 +43,7 @@ def func_full_halo_model_nu_sophie(M, k, PS_cold, PS_nu, k_sigma, PS_sigma, cosm
                                                      cosmo_dic['Omega_db_0'], eta_given = eta_given, LCDM=LCDM) # for the integral over M ~[0, inf]
     dens_profile_cold_arr_2 = func_dens_profile_kspace(neutrino_dic['M_int'], k, k_sigma, PS_sigma, cosmo_dic, hmcode_dic, cosmo_dic['Omega_db_0'], 
                                                        cosmo_dic['Omega_db_0'], eta_given = eta_given, LCDM=LCDM) # for the integral over reduced array [M_cut, inf]    
-    dens_profile_nu_arr_2 = func_density_profile_kspace_neutrino(neutrino_dic['M_int'], k, cosmo_dic, hmcode_dic, LCDM = LCDM) # this integral in only in the reduced one
+    dens_profile_nu_arr_2 = func_density_profile_kspace_neutrino(neutrino_dic['M_int'], k, cosmo_dic, neutrino_dic['M_cut'], LCDM = LCDM) # this integral in only in the reduced one
 
     
     halo_bias_arr = func_halo_bias(M, k_sigma, PS_sigma, cosmo_dic, cosmo_dic['Omega_db_0'], LCDM = LCDM) # for the integral over M ~[0, inf]
